@@ -9,6 +9,7 @@ class DefaultContainerApp : ContainerApp{
     val logging HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
 
     val klien = okHttpClient.Builder()
-        .add
+        .addInterceptor(logging)
+        .build()
 
 }

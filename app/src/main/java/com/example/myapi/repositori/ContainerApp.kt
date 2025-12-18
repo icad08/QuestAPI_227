@@ -1,5 +1,6 @@
 package com.example.myapi.repositori
 
+import android.app.Application
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -12,7 +13,7 @@ interface ContainerApp {
 }
 
 class DefaultContainerApp : ContainerApp {
-    private val beseurl = "http://10.0.2.2:3000/"
+    private val beseurl = "http://10.0.2.2/phpmobile"
 
     private val logging = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -36,5 +37,17 @@ class DefaultContainerApp : ContainerApp {
 
     private val retrofitService: ServiceApiSiswa by lazy {
         retrofit.create(ServiceApiSiswa::class.java)
+    }
 
+    override val repositoryDataSiswa: RepositoryDataSiswa by lazy {
+        JaringanRepositoryDataSiswa(retrofitService)
+    }
+}
+
+class AplikasiDataSiswa : Application() {
+    lateinit var container: ContainerApp
+    override fun onCreate() {
+        super.onCreate()
+        this.container = DefaultContainerApp()
+    }
 }

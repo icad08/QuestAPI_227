@@ -1,13 +1,16 @@
 package com.example.myapi.view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -100,5 +103,23 @@ fun OnLoading(modifier: Modifier = Modifier) {
         painter = painterResource(R.drawable.loading_img),
         contentDescription = ""
     )
+}
+
+@Composable
+fun OnError(retryAction: () -> Unit, modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_connection_error),
+            contentDescription = ""
+        )
+        Text(text = stringResource(R.string.loading_failed), modifier = Modifier.padding(16.dp))
+        Button(onClick = retryAction) {
+            Text(stringResource(R.string.retry))
+        }
+    }
 }
 

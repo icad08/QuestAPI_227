@@ -15,7 +15,7 @@ class EntryViewModel(private val repositoryDataSiswa: RepositoriDataSiswa):
     var uiStateSiswa by mutableStateOf(UIStateSiswa())
         private set
 
-    private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa ):
+    private fun validasiInput(uiState: DetailSiswa = uiStateSiswa.detailSiswa):
             Boolean {
         return with(uiState) {
             nama.isNotBlank() && alamat.isNotBlank() && telpon.isNotBlank()
@@ -24,18 +24,19 @@ class EntryViewModel(private val repositoryDataSiswa: RepositoriDataSiswa):
 
     fun updateUiState(detailSiswa: DetailSiswa) {
         uiStateSiswa =
-            UIStateSiswa(detailSiswa = detailSiswa, isEntryValid = validasiInput
-                (detailSiswa))
+            UIStateSiswa(
+                detailSiswa = detailSiswa, isEntryValid = validasiInput
+                    (detailSiswa)
+            )
     }
 
     suspend fun addSiswa() {
         if (validasiInput()) {
-            val sip:Response<Void> =repositoryDataSiswa.postDataSiswa(uiStateSiswa
-                .detailSiswa.toDataSiswa())
-            if (sip.isSuccessful){
-                println("Sukses Tambah Data : ${sip.message()}")
-            }else{
-                println("Gagal tambah data : ${sip.errorBody()}")
+            val sip: Response<Void> = repositoryDataSiswa.postDatasiswa(
+                uiStateSiswa.detailSiswa.toDataSiswa()
+            )
+            if (sip.isSuccessful) {
+                println("Sukses Tambah Data")
             }
         }
     }

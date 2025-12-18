@@ -1,6 +1,6 @@
 package com.example.myapi.view
 
-import androidx.compose.foundation.R
+import com.example.myapi.R
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

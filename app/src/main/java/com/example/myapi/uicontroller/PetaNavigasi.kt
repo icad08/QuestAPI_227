@@ -19,10 +19,7 @@ fun DataSiswaApp(
     navController: NavHostController = rememberNavController(),
     modifier: Modifier = Modifier
 ) {
-    HostNavigasi(
-        navController = navController,
-        modifier = modifier
-    )
+    HostNavigasi(navController = navController, modifier = modifier)
 }
 
 @Composable
@@ -37,30 +34,24 @@ fun HostNavigasi(
     ) {
         composable(DestinasiHome.route) {
             HomeScreen(
-                navigateToItemEntry = {
-                    navController.navigate(DestinasiEntry.route)
-                },
-                navigateToItemUpdate = { idSiswa ->
-                    navController.navigate("${DestinasiDetail.route}/$idSiswa")
+                navigateToItemEntry = { navController.navigate(DestinasiEntry.route) },
+                onDetailClick = { id ->
+                    navController.navigate("${DestinasiDetail.route}/$id")
                 }
             )
-        }
 
+        }
         composable(DestinasiEntry.route) {
-            EntrySiswaScreen(
-                navigateBack = {
-                    navController.navigate(DestinasiHome.route)
-                }
-            )
+            EntrySiswaScreen(navigateBack = {
+                navController.popBackStack()
+            })
         }
-
         composable(
             route = DestinasiDetail.routeWithArgs,
             arguments = listOf(navArgument(DestinasiDetail.idSiswa) {
                 type = NavType.IntType
             })
         ) {
-
         }
     }
 }

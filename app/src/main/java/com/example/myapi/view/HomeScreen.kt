@@ -1,5 +1,8 @@
 package com.example.myapi.view
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -7,14 +10,17 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.myapi.uicontroller.route.DestinasiHome
 import com.example.myapi.viewmodel.HomeViewModel
+import com.example.myapi.viewmodel.StatusUiSiswa
 import com.example.myapi.viewmodel.provider.PenyediaViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,5 +60,30 @@ fun HomeScreen(
             modifier = Modifier.padding(innerPadding),
             onDetailClick = onDetailClick
         )
+    }
+}
+
+@Composable
+fun HomeStatus(
+    statusUiSiswa: StatusUiSiswa,
+    retryAction: () -> Unit,
+    modifier: Modifier = Modifier,
+    onDetailClick: (Int) -> Unit
+) {
+    when (statusUiSiswa) {
+        is StatusUiSiswa.Loading -> OnLoading(modifier = modifier.fillMaxSize())
+        is StatusUiSiswa.Success ->
+            if (statusUiSiswa.siswa.isEmpty()) {
+                return Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = "Tidak ada data siswa")
+                }
+            } else {
+                SiswaLayout(
+                    siswa = statusUiSiswa.siswa,
+                    modifier = modifier.fillMaxWidth(),
+                    onDetailClick = { onDetailClick(it.id) }
+                )
+            }
+        is StatusUiSiswa.Error -> OnError(retryAction, modifier = modifier.fillMaxSize())
     }
 }

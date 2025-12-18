@@ -5,13 +5,14 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.myapi.repositori.AplikasiDataSiswa
+import com.example.myapi.modeldata.DataSiswa
+import com.example.myapi.modeldata.DataSiswa
 import com.example.myapi.viewmodel.EntryViewModel
 import com.example.myapi.viewmodel.HomeViewModel
 
-fun CreationExtras.aplikasiDataSiswa():AplikasiDataSiswa = (
+fun CreationExtras.aplikasiDataSiswa(): DataSiswa = (
         this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as
-                AplikasiDataSiswa
+                DataSiswa
         )
 
 object PenyediaViewModel {

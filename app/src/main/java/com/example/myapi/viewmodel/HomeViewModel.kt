@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapi.modeldata.DataSiswa
-import com.example.myapi.repositori.RepositoryDataSiswa
+import com.example.myapi.repositori.RepositoriDataSiswa
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -17,7 +17,7 @@ sealed interface StatusUiSiswa {
     object Loading : StatusUiSiswa
 }
 
-class HomeViewModel(private val repositoryDataSiswa: RepositoryDataSiswa):
+class HomeViewModel(private val repositoryDataSiswa: RepositoriDataSiswa):
     ViewModel() {
     var listSiswa: StatusUiSiswa by mutableStateOf(StatusUiSiswa.Loading)
         private set

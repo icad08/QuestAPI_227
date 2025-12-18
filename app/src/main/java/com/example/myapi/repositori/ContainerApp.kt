@@ -1,53 +1,29 @@
 package com.example.myapi.repositori
 
-import android.app.Application
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 interface ContainerApp {
-    val repositoryDataSiswa: RepositoryDataSiswa
+    val repositoryDataSiswa : RepositoriDataSiswa
 }
 
 class DefaultContainerApp : ContainerApp {
-    private val beseurl = "http://10.0.2.2/phpmobile"
+    private val baseurl = "http://10.0.2.2/umyTI/"
 
-    private val logging = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
+    private val json = kotlinx.serialization.json.Json { ignoreUnknownKeys = true }
 
-    private val klien = OkHttpClient.Builder()
-        .addInterceptor(logging)
+    private val retrofit: Retrofit = Retrofit.Builder()
+        .addConverterFactory(com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory(json.asConverterFactory("application/json".toMediaType())))
+        .baseUrl(baseurl)
         .build()
 
-    private val retrofit = Retrofit.Builder()
-        .baseUrl(beseurl)
-        .addConverterFactory(
-            Json {
-                ignoreUnknownKeys = true
-                prettyPrint = true
-                isLenient = true
-            }.asConverterFactory("application/json".toMediaType())
-        )
-        .client(klien)
-        .build()
-
-    private val retrofitService: ServiceApiSiswa by lazy {
-        retrofit.create(ServiceApiSiswa::class.java)
+    private val serviceApiSiswa: serviceApiSiswa by lazy {
+        retrofit.create(serviceApiSiswa::class.java)
     }
 
-    override val repositoryDataSiswa: RepositoryDataSiswa by lazy {
-        JaringanRepositoryDataSiswa(retrofitService)
-    }
-}
-
-class AplikasiDataSiswa : Application() {
-    lateinit var container: ContainerApp
-    override fun onCreate() {
-        super.onCreate()
-        this.container = DefaultContainerApp()
+    override val repositoryDataSiswa: RepositoriDataSiswa by lazy {
+        JaringanRepositoryDataSiswa(serviceApiSiswa)
     }
 }

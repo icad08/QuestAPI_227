@@ -5,20 +5,19 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ServiceApiSiswa {
-    @GET("bacasiswa.php")
+    @GET("bacateman.php")
     suspend fun getSiswa(): List<DataSiswa>
 
-    @POST("insertsiswa.php")
+    @POST("insert.php")
     suspend fun postSiswa(@Body dataSiswa: DataSiswa): Response<Void>
 
-    // --- TAMBAHAN KODE DI BAWAH INI ---
-
-    @GET("bacasiswa.php/{id}")
+    @GET("bacateman.php")
     suspend fun getSatuSiswa(@Query("id") id: Int): DataSiswa
 
-    @PUT("editsiswa.php/{id}")
+    @PUT("editSiswa.php")
     suspend fun editSatuSiswa(@Query("id") id: Int, @Body dataSiswa: DataSiswa): Response<Void>
 
-    @DELETE("deletesiswa.php/{id}")
+    // KOREKSI 4: Hapus '/{id}' dan pastikan nama file 'deleteSiswa.php'
+    @DELETE("deleteSiswa.php")
     suspend fun hapusSatuSiswa(@Query("id") id: Int): Response<Void>
 }

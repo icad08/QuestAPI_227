@@ -35,11 +35,10 @@ fun HostNavigasi(
         composable(DestinasiHome.route) {
             HomeScreen(
                 navigateToItemEntry = { navController.navigate(DestinasiEntry.route) },
-                onDetailClick = { id ->
-                    navController.navigate("${DestinasiDetail.route}/$id")
+                onDetailClick = { itemId ->
+                    navController.navigate("${DestinasiDetail.route}/$itemId")
                 }
             )
-
         }
         composable(DestinasiEntry.route) {
             EntrySiswaScreen(navigateBack = {

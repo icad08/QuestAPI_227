@@ -1,10 +1,13 @@
 package com.example.myapi.viewmodel.provider
 
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.myapi.repositori.AplikasiDataSiswa
+import com.example.myapi.viewmodel.DetailViewModel
+import com.example.myapi.viewmodel.EditViewModel
 import com.example.myapi.viewmodel.EntryViewModel
 import com.example.myapi.viewmodel.HomeViewModel
 
@@ -14,11 +17,22 @@ fun CreationExtras.aplikasiDataSiswa(): AplikasiDataSiswa = (
 
 object PenyediaViewModel {
     val Factory = viewModelFactory {
+        initializer { HomeViewModel(aplikasiDataSiswa().container.repositoryDataSiswa) }
+        initializer { EntryViewModel(aplikasiDataSiswa().container.repositoryDataSiswa) }
+
+        // TAMBAHAN
         initializer {
-            HomeViewModel(aplikasiDataSiswa().container.repositoryDataSiswa)
+            DetailViewModel(
+                createSavedStateHandle(),
+                aplikasiDataSiswa().container.repositoryDataSiswa
+            )
         }
         initializer {
-            EntryViewModel(aplikasiDataSiswa().container.repositoryDataSiswa)
+            EditViewModel(
+                createSavedStateHandle(),
+                aplikasiDataSiswa().container.repositoryDataSiswa
+            )
         }
     }
 }
+

@@ -9,4 +9,5 @@
     <string name="alamat">Alamat</string>
     <string name="telpon">Telepon</string>
     <string name="required_field">Wajib diisi</string>
+    <string name="edit_siswa">edit siswa</string>
 </resources>

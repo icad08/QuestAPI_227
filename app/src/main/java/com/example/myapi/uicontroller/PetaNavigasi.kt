@@ -67,3 +67,8 @@ fun HostNavigasi(
         }
     }
 }
+
+@Composable
+fun DetailScreen(navigateToEditItem: () -> Unit, navigateBack: () -> Boolean) {
+    TODO("Not yet implemented")
+}

@@ -12,6 +12,7 @@ import com.example.myapi.uicontroller.route.DestinasiDetail
 import com.example.myapi.uicontroller.route.DestinasiEdit
 import com.example.myapi.uicontroller.route.DestinasiEntry
 import com.example.myapi.uicontroller.route.DestinasiHome
+import com.example.myapi.view.EditSiswaScreen
 import com.example.myapi.view.EntrySiswaScreen
 import com.example.myapi.view.HomeScreen
 
@@ -53,6 +54,15 @@ fun HostNavigasi(
             DetailScreen(
                 navigateToEditItem = { navController.navigate("${DestinasiEdit.route}/$it") },
                 navigateBack = { navController.navigateUp() }
+            )
+        }
+        composable(
+            route = DestinasiEdit.routeWithArgs,
+            arguments = listOf(navArgument(DestinasiEdit.idSiswa) { type = NavType.IntType })
+        ) {
+            EditSiswaScreen(
+                navigateBack = { navController.popBackStack() },
+                onNavigateUp = { navController.navigateUp() }
             )
         }
     }
